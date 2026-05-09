@@ -1,0 +1,14 @@
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\bin\Debug\net8.0\TallerAlgoritmosModulares.exe
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\bin\Debug\net8.0\TallerAlgoritmosModulares.deps.json
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\bin\Debug\net8.0\TallerAlgoritmosModulares.runtimeconfig.json
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\bin\Debug\net8.0\TallerAlgoritmosModulares.dll
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\bin\Debug\net8.0\TallerAlgoritmosModulares.pdb
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.AssemblyInfoInputs.cache
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.AssemblyInfo.cs
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.dll
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\refint\TallerAlgoritmosModulares.dll
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.pdb
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\TallerAlgoritmosModulares.genruntimeconfig.cache
+C:\Users\Usuario\source\repos\TallerAlgoritmosModulares\TallerAlgoritmosModulares\obj\Debug\net8.0\ref\TallerAlgoritmosModulares.dll
