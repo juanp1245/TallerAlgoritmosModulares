@@ -1,261 +1,271 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TallerAlgoritmosModulares
 {
     internal class SeguimientoNotas
     {
+        int maxEstudiantes = 25;
+        int contadorEstudiantes = 0;
+
+        string[] codigos = new string[25];
+        string[] nombres = new string[25];
+        double[] asistencias = new double[25];
+
+        double[,] notasParciales = new double[25, 3];
+
         public void Ejecutar()
         {
-            Console.WriteLine("Ejecutando el sistema de Notas...");
+            int seleccion = 0;
 
-            /*
-             * using System;
+            while (seleccion != 6)
+            {
+                Console.WriteLine("\n---------------- Sistema de Control Académico ----------------");
+                Console.WriteLine("Seleccione una opción:");
+                Console.WriteLine("1. Registrar estudiantes");
+                Console.WriteLine("2. Calcular definitiva y mostrar estado");
+                Console.WriteLine("3. Mostrar promedio general del grupo");
+                Console.WriteLine("4. Identificar mejor y peor promedio");
+                Console.WriteLine("5. Volver al menú principal");
+                Console.Write("Opción: ");
 
-                class program
+                seleccion = Convert.ToInt32(Console.ReadLine());
+
+                while (seleccion < 1 || seleccion > 6)
                 {
-                    const int max = 25;
+                    Console.WriteLine("Seleccione una opción correcta (1-6):");
+                    seleccion = Convert.ToInt32(Console.ReadLine());
+                }
 
-                    static string[] codigo = new string[max];
-                    static string[] nombre = new string[max];
+                switch (seleccion)
+                {
+                    case 1:
+                        RegistrarEstudiantes();
+                        break;
+                    case 2:
+                        CalcularDefinitivaYEstado();
+                        break;
+                    case 3:
+                        MostrarPromedioGrupo();
+                        break;
+                    case 4:
+                        IdentificarExtremos();
+                        break;
+                    case 5:
+                        Console.WriteLine("Regresando al menú principal...");
+                        break;
+                }
+            }
+        }
 
-                    static double[,] notas = new double[max, 3];
+        private void RegistrarEstudiantes()
+        {
+            Console.WriteLine("\n--- Registro de Estudiante ---");
 
-                    static double[] asistencia = new double[max];
-                    static double[] definitiva = new double[max];
+            if (contadorEstudiantes >= maxEstudiantes)
+            {
+                Console.WriteLine("Error: No hay cupos disponibles. Se ha alcanzado el límite de 25 estudiantes.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
+                return;
+            }
 
-                    static string[] estado = new string[max];
+            Console.Write("Ingrese el código del estudiante: ");
+            codigos[contadorEstudiantes] = Console.ReadLine();
 
-                    static int cantidad = 0;
+            Console.Write("Ingrese el nombre completo: ");
+            nombres[contadorEstudiantes] = Console.ReadLine();
 
-                    static void Main(string[] args)
+            double asistencia = -1;
+            while (asistencia < 0 || asistencia > 100)
+            {
+                Console.Write("Ingrese el porcentaje de asistencia (0 a 100): ");
+                asistencia = Convert.ToDouble(Console.ReadLine());
+
+                if (asistencia < 0 || asistencia > 100)
+                {
+                    Console.WriteLine("Porcentaje inválido. Debe estar entre 0 y 100.");
+                }
+            }
+            asistencias[contadorEstudiantes] = asistencia;
+
+            for (int c = 0; c < 3; c++)
+            {
+                double nota = -1;
+
+                while (nota < 0.0 || nota > 5.0)
+                {
+                    Console.Write($"Ingrese la nota parcial {c + 1} (0.0 a 5.0): ");
+                    nota = Convert.ToDouble(Console.ReadLine());
+
+                    if (nota < 0.0 || nota > 5.0)
                     {
-                        int opcion;
-
-                        do
-                        {
-                            Console.Clear();
-
-                            Console.WriteLine("sistema de notas pascual bravo");
-                            Console.WriteLine("1 registrar estudiantes");
-                            Console.WriteLine("2 mostrar estudiantes");
-                            Console.WriteLine("3 promedio general");
-                            Console.WriteLine("4 mejor promedio");
-                            Console.WriteLine("5 peor promedio");
-                            Console.WriteLine("0 salir");
-
-                            Console.Write("seleccione un numero: ");
-                            opcion = Convert.ToInt32(Console.ReadLine());
-
-                            switch (opcion)
-                            {
-                                case 1:
-                                    registrar();
-                                    break;
-
-                                case 2:
-                                    mostrar();
-                                    break;
-
-                                case 3:
-                                    promedio();
-                                    break;
-
-                                case 4:
-                                    mejor();
-                                    break;
-
-                                case 5:
-                                    peor();
-                                    break;
-
-                                case 0:
-                                    Console.WriteLine("fin");
-                                    break;
-
-                                default:
-                                    Console.WriteLine("opcion mala");
-                                    break;
-                            }
-
-                            Console.WriteLine("enter para seguir");
-                            Console.ReadKey();
-
-                        } while (opcion != 0);
-                    }
-
-                    static void registrar()
-                    {
-                        int n;
-
-                        Console.Write("cuantos estudiantes va meter: ");
-                        n = Convert.ToInt32(Console.ReadLine());
-
-                        for (int i = 0; i < n; i++)
-                        {
-                            if (cantidad >= max)
-                            {
-                                Console.WriteLine("ya no caben mas");
-                                break;
-                            }
-
-                            Console.WriteLine("estudiante " + (cantidad + 1));
-
-                            Console.Write("codigo: ");
-                            codigo[cantidad] = Console.ReadLine();
-
-                            Console.Write("nombre: ");
-                            nombre[cantidad] = Console.ReadLine();
-
-                            for (int j = 0; j < 3; j++)
-                            {
-                                do
-                                {
-                                    Console.Write("nota " + (j + 1) + ": ");
-                                    notas[cantidad, j] = Convert.ToDouble(Console.ReadLine());
-
-                                    if (notas[cantidad, j] < 0 || notas[cantidad, j] > 5)
-                                    {
-                                        Console.WriteLine("la nota tiene que ser de 0 a 5");
-                                    }
-
-                                } while (notas[cantidad, j] < 0 || notas[cantidad, j] > 5);
-                            }
-
-                            Console.Write("asistencia: ");
-                            asistencia[cantidad] = Convert.ToDouble(Console.ReadLine());
-
-                            definitiva[cantidad] =
-                            (notas[cantidad, 0] * 0.3) +
-                            (notas[cantidad, 1] * 0.3) +
-                            (notas[cantidad, 2] * 0.4);
-
-                            if (definitiva[cantidad] >= 3.5)
-                            {
-                                estado[cantidad] = "aprobado";
-                            }
-                            else
-                            {
-                                if (definitiva[cantidad] >= 2)
-                                {
-                                    estado[cantidad] = "habilita";
-                                }
-                                else
-                                {
-                                    estado[cantidad] = "reprueba";
-                                }
-                            }
-
-                            cantidad++;
-                        }
-                    }
-
-                    static void mostrar()
-                    {
-                        if (cantidad == 0)
-                        {
-                            Console.WriteLine("no hay estudiantes");
-                            return;
-                        }
-
-                        for (int i = 0; i < cantidad; i++)
-                        {
-                            Console.WriteLine("----------------");
-
-                            Console.WriteLine("codigo: " + codigo[i]);
-                            Console.WriteLine("nombre: " + nombre[i]);
-
-                            Console.WriteLine("nota 1: " + notas[i, 0]);
-                            Console.WriteLine("nota 2: " + notas[i, 1]);
-                            Console.WriteLine("nota 3: " + notas[i, 2]);
-
-                            Console.WriteLine("asistencia: " + asistencia[i]);
-
-                            Console.WriteLine("definitiva: " + definitiva[i]);
-
-                            Console.WriteLine("estado: " + estado[i]);
-                        }
-                    }
-
-                    static void promedio()
-                    {
-                        double suma = 0;
-                        double prom;
-
-                        if (cantidad == 0)
-                        {
-                            Console.WriteLine("no hay estudiantes");
-                            return;
-                        }
-
-                        for (int i = 0; i < cantidad; i++)
-                        {
-                            suma = suma + definitiva[i];
-                        }
-
-                        prom = suma / cantidad;
-
-                        Console.WriteLine("promedio general: " + prom);
-                    }
-
-                    static void mejor()
-                    {
-                        double mayor;
-                        int pos = 0;
-
-                        if (cantidad == 0)
-                        {
-                            Console.WriteLine("no hay estudiantes");
-                            return;
-                        }
-
-                        mayor = definitiva[0];
-
-                        for (int i = 1; i < cantidad; i++)
-                        {
-                            if (definitiva[i] > mayor)
-                            {
-                                mayor = definitiva[i];
-                                pos = i;
-                            }
-                        }
-
-                        Console.WriteLine("mejor promedio");
-                        Console.WriteLine("nombre: " + nombre[pos]);
-                        Console.WriteLine("nota: " + mayor);
-                    }
-
-                    static void peor()
-                    {
-                        double menor;
-                        int pos = 0;
-
-                        if (cantidad == 0)
-                        {
-                            Console.WriteLine("no hay estudiantes");
-                            return;
-                        }
-
-                        menor = definitiva[0];
-
-                        for (int i = 1; i < cantidad; i++)
-                        {
-                            if (definitiva[i] < menor)
-                            {
-                                menor = definitiva[i];
-                                pos = i;
-                            }
-                        }
-
-                        Console.WriteLine("peor promedio");
-                        Console.WriteLine("nombre: " + nombre[pos]);
-                        Console.WriteLine("nota: " + menor);
+                        Console.WriteLine("Nota inválida. La calificación debe estar en el rango de 0.0 a 5.0.");
                     }
                 }
-            */
+
+                notasParciales[contadorEstudiantes, c] = nota;
+            }
+
+            Console.WriteLine("\nEstudiante y notas registrados correctamente.");
+            contadorEstudiantes++;
+
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+        }
+
+        private void CalcularDefinitivaYEstado()
+        {
+            Console.WriteLine("\n--- Definitivas y Estados ---");
+
+            if (contadorEstudiantes == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados en el sistema para calcular definitivas.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.WriteLine(string.Format("| {0,-10} | {1,-20} | {2,-7} | {3,-7} | {4,-7} | {5,-10} | {6,-9} |",
+                "Código", "Nombre", "Nota 1", "Nota 2", "Nota 3", "Definitiva", "Estado"));
+            Console.WriteLine("--------------------------------------------------------------------------------");
+
+            for (int i = 0; i < contadorEstudiantes; i++)
+            {
+                double sumaNotas = 0.0;
+
+                for (int c = 0; c < 3; c++)
+                {
+                    sumaNotas += notasParciales[i, c];
+                }
+
+                double definitiva = sumaNotas / 3.0;
+                string estado;
+
+                if (definitiva >= 3.0)
+                {
+                    estado = "Aprobado";
+                }
+                else
+                {
+                    estado = "Reprueba";
+                }
+
+                Console.WriteLine(string.Format("| {0,-10} | {1,-20} | {2,-7:F2} | {3,-7:F2} | {4,-7:F2} | {5,-10:F2} | {6,-9} |",
+                    codigos[i],
+                    nombres[i],
+                    notasParciales[i, 0],
+                    notasParciales[i, 1],
+                    notasParciales[i, 2],
+                    definitiva,
+                    estado));
+            }
+
+            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.WriteLine("\nPresione cualquier tecla para continuar...");
+            Console.ReadKey();
+        }
+
+        private void MostrarPromedioGrupo()
+        {
+            Console.WriteLine("\n--- Promedio General del Grupo ---");
+
+            if (contadorEstudiantes == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados en el sistema para calcular un promedio.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
+                return;
+            }
+
+            double sumaDefinitivasGrupo = 0.0;
+
+            for (int i = 0; i < contadorEstudiantes; i++)
+            {
+                double sumaNotasEstudiante = 0.0;
+
+                for (int c = 0; c < 3; c++)
+                {
+                    sumaNotasEstudiante += notasParciales[i, c];
+                }
+
+                double definitivaEstudiante = sumaNotasEstudiante / 3.0;
+
+                sumaDefinitivasGrupo += definitivaEstudiante;
+            }
+
+            double promedioGeneral = sumaDefinitivasGrupo / contadorEstudiantes;
+
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine($"Total estudiantes evaluados: {contadorEstudiantes}");
+            Console.WriteLine($"Promedio general del grupo:  {promedioGeneral:F2}");
+            Console.WriteLine("-------------------------------------");
+
+            Console.WriteLine("\nPresione cualquier tecla para continuar...");
+            Console.ReadKey();
+        }
+
+        private void IdentificarExtremos()
+        {
+            Console.WriteLine("\n--- Mejor y Peor Promedio ---");
+
+            if (contadorEstudiantes == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados en el sistema para evaluar extremos.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
+                return;
+            }
+
+            double sumaNotasPrimerEstudiante = 0.0;
+            for (int c = 0; c < 3; c++)
+            {
+                sumaNotasPrimerEstudiante += notasParciales[0, c];
+            }
+
+            double mejorPromedio = sumaNotasPrimerEstudiante / 3.0;
+            double peorPromedio = sumaNotasPrimerEstudiante / 3.0;
+
+            int indiceMejor = 0;
+            int indicePeor = 0;
+
+            for (int i = 1; i < contadorEstudiantes; i++)
+            {
+                double sumaNotasActual = 0.0;
+                for (int c = 0; c < 3; c++)
+                {
+                    sumaNotasActual += notasParciales[i, c];
+                }
+
+                double promedioActual = sumaNotasActual / 3.0;
+
+                if (promedioActual > mejorPromedio)
+                {
+                    mejorPromedio = promedioActual;
+                    indiceMejor = i;
+                }
+
+                if (promedioActual < peorPromedio)
+                {
+                    peorPromedio = promedioActual;
+                    indicePeor = i;
+                }
+            }
+
+            Console.WriteLine("------------------------------------------------------------");
+            Console.WriteLine("MEJOR PROMEDIO");
+            Console.WriteLine($"Código:    {codigos[indiceMejor]}");
+            Console.WriteLine($"Nombre:    {nombres[indiceMejor]}");
+            Console.WriteLine($"Promedio:  {mejorPromedio:F2}");
+            Console.WriteLine("------------------------------------------------------------");
+            Console.WriteLine("PEOR PROMEDIO");
+            Console.WriteLine($"Código:    {codigos[indicePeor]}");
+            Console.WriteLine($"Nombre:    {nombres[indicePeor]}");
+            Console.WriteLine($"Promedio:  {peorPromedio:F2}");
+            Console.WriteLine("------------------------------------------------------------");
+
+            Console.WriteLine("\nPresione cualquier tecla para continuar...");
+            Console.ReadKey();
         }
     }
 }
